@@ -15,7 +15,6 @@ from time import time
 #sys.path.append("../tools/")
 
 import os
-
 sys.path.append(os.path.join(os.getcwd(), "tools"))
 
 from email_preprocess import preprocess
