@@ -56,7 +56,7 @@ def preprocess(words_file = os.path.join(dir_path, "word_data.pkl"), authors_fil
 
     ### feature selection, because text is super high dimensional and 
     ### can be really computationally chewy as a result
-    selector = SelectPercentile(f_classif, percentile=10)
+    selector = SelectPercentile(f_classif, percentile=1)
     selector.fit(features_train_transformed, labels_train)
     features_train_transformed = selector.transform(features_train_transformed).toarray()
     features_test_transformed  = selector.transform(features_test_transformed).toarray()
@@ -64,5 +64,22 @@ def preprocess(words_file = os.path.join(dir_path, "word_data.pkl"), authors_fil
     ### info on the data
     print "no. of Chris training emails:", sum(labels_train)
     print "no. of Sara training emails:", len(labels_train)-sum(labels_train)
+    print(len(features_train))
+    print(len(features_test))
+
+    ### Write to file (only the first 100 data)
+    ### features_train & features_test are lists
+    with open("features_train.txt", "w") as f_train:
+        for i in features_train[:100]:
+            f_train.write(i)
+    with open("features_test.txt", "w") as f_test:
+        for i in features_train[:100]:
+            f_test.write(i)
+    ### features_train_transformed, features_test_transformed, labels_train, labels_test are arrays
+    numpy.savetxt("features_train_transformed.txt", features_train_transformed[:100])
+    numpy.savetxt("features_test_transformed.txt", features_test_transformed[:100])
+    numpy.savetxt("labels_train.txt", labels_train[:100])
+    numpy.savetxt("labels_test.txt", labels_test[:100])
+
     
     return features_train_transformed, features_test_transformed, labels_train, labels_test
