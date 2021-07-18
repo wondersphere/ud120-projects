@@ -81,3 +81,47 @@ for name in enron_data.keys():
         pass
 print("Salary Count:", salary_count)
 print("Email Count:", email_count)
+
+# How many people in the E+F dataset (as it currently exists) have “NaN” for their total payments? 
+# What percentage of people in the dataset as a whole is this?
+nan_count = 0
+for name in enron_data.keys():
+    if enron_data[name]["total_payments"] == "NaN": # The NaN values are string apparently
+        nan_count +=1
+nan_percent = nan_count/len(enron_data.keys()) * 100
+print("How many people in the E+F dataset (as it currently exists) have “NaN” for their total payments?")
+print(nan_count)
+print("What percentage of people in the dataset as a whole is this?")
+print(nan_percent, "%")
+
+# How many POIs in the E+F dataset have “NaN” for their total payments? 
+# What percentage of POI’s as a whole is this?
+nan_count_poi = 0
+count_poi = 0
+for name in enron_data.keys():
+    if enron_data[name]["poi"] == True:
+        count_poi += 1
+        if enron_data[name]["total_payments"] == "NaN":
+            nan_count_poi +=1
+nan_percent_poi = nan_count_poi/count_poi * 100
+print("How many POIs in the E+F dataset have “NaN” for their total payments?")
+print(nan_count_poi)
+print("What percentage of POI’s as a whole is this?")
+print(nan_percent_poi, "%")
+
+# If you added in, say, 10 more data points which were all POI’s, and put “NaN” for the total payments for those folks, the numbers you just calculated would change.
+# What is the new number of people of the dataset? What is the new number of folks with “NaN” for total payments?
+print("If you added in, say, 10 more data points which were all POI’s, and put “NaN” for the total payments for those folks, the numbers you just calculated would change")
+print("What is the new number of people of the dataset?")
+print(len(enron_data.keys())+10)
+print("What is the new number of folks with “NaN” for total payments")
+print(nan_count+10)
+
+# What is the new number of POI’s in the dataset? What is the new number of POI’s with NaN for total_payments?
+print("What is the new number of POI’s in the dataset?")
+print(count_poi+10)
+print("What is the new number of POI’s with NaN for total_payments")
+print(nan_count_poi+10)
+
+# Once the new data points are added, do you think a supervised classification algorithm might interpret “NaN” for total_payments as a clue that someone is a POI?
+
