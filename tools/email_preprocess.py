@@ -62,8 +62,8 @@ def preprocess(words_file = os.path.join(dir_path, "word_data.pkl"), authors_fil
     features_test_transformed  = selector.transform(features_test_transformed).toarray()
 
     ### info on the data
-    print "no. of Chris training emails:", sum(labels_train)
-    print "no. of Sara training emails:", len(labels_train)-sum(labels_train)
+    print("no. of Chris training emails:", sum(labels_train))
+    print("no. of Sara training emails:", len(labels_train)-sum(labels_train))
     print(len(features_train))
     print(len(features_test))
 
