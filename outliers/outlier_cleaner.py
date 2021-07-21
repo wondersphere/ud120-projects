@@ -15,6 +15,9 @@ def outlierCleaner(predictions, ages, net_worths):
 
     ### your code goes here
 
-    
+    error = map(lambda x, y: abs(x - y), predictions, net_worths)
+    cleaned_data = sorted(zip(ages, net_worths, error), key = lambda x: x[2])[:-10]
+ 
+
     return cleaned_data
 

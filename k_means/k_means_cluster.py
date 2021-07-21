@@ -11,7 +11,10 @@ import pickle
 import numpy
 import matplotlib.pyplot as plt
 import sys
-sys.path.append("../tools/")
+# sys.path.append("../tools/")
+import os
+sys.path.append(os.path.join(os.getcwd(), "tools"))
+
 from feature_format import featureFormat, targetFeatureSplit
 
 
@@ -39,7 +42,9 @@ def Draw(pred, features, poi, mark_poi=False, name="image.png", f1_name="feature
 
 
 ### load in the dict of dicts containing all the data on each person in the dataset
-data_dict = pickle.load( open("../final_project/final_project_dataset.pkl", "r") )
+# data_dict = pickle.load( open("../final_project/final_project_dataset.pkl", "r") )
+file_path = os.path.join(os.getcwd(), "final_project", "final_project_dataset.pkl")
+data_dict = pickle.load( open(file_path, "r") )
 ### there's an outlier--remove it! 
 data_dict.pop("TOTAL", 0)
 
@@ -65,7 +70,11 @@ plt.show()
 ### cluster here; create predictions of the cluster labels
 ### for the data and store them to a list called pred
 
+from sklearn.cluster import KMeans
 
+cpred = KMeans(n_clusters=2)
+cpred.fit(finance_features)
+pred = cpred.labels_
 
 
 ### rename the "name" parameter when you change the number of features
