@@ -53,8 +53,9 @@ data_dict.pop("TOTAL", 0)
 ### can be any key in the person-level dictionary (salary, director_fees, etc.) 
 feature_1 = "salary"
 feature_2 = "exercised_stock_options"
+feature_3 = "total_payments"
 poi  = "poi"
-features_list = [poi, feature_1, feature_2]
+features_list = [poi, feature_1, feature_2, feature_3]
 data = featureFormat(data_dict, features_list )
 poi, finance_features = targetFeatureSplit( data )
 
@@ -63,7 +64,7 @@ poi, finance_features = targetFeatureSplit( data )
 ### you'll want to change this line to 
 ### for f1, f2, _ in finance_features:
 ### (as it's currently written, the line below assumes 2 features)
-for f1, f2 in finance_features:
+for f1, f2, _ in finance_features:
     plt.scatter( f1, f2 )
 plt.show()
 
@@ -80,6 +81,45 @@ pred = cpred.labels_
 ### rename the "name" parameter when you change the number of features
 ### so that the figure gets saved to a different file
 try:
-    Draw(pred, finance_features, poi, mark_poi=False, name="clusters.pdf", f1_name=feature_1, f2_name=feature_2)
+    Draw(pred, finance_features, poi, mark_poi=False, name="clusters_3feat.pdf", f1_name=feature_1, f2_name=feature_2)
 except NameError:
     print "no predictions object named pred found, no clusters to plot"
+
+# What are the maximum and minimum values taken by the "exercised_stock_options" feature used in this example?
+min_stock = 1e+20
+max_stock = 0
+for i in finance_features:
+    try:
+        if i[1] > max_stock:
+            max_stock = i[1]
+        if i[1] < min_stock and i[1] > 0:
+            min_stock = i[1]
+    except:
+        pass
+print("Maximum excercised_stock_options:", max_stock)
+print("Minimum excercised_stock_options:", min_stock)
+
+# What are the maximum and minimum values taken by "salary"?
+max_salary = 0
+min_salary = 1e+20
+for name in data_dict:
+    try:
+        if int(data_dict[name]["salary"]) > max_salary:
+            max_salary = data_dict[name]["salary"]
+        if int(data_dict[name]["salary"]) < min_salary and int(data_dict[name]["salary"]) > 0:
+            min_salary = data_dict[name]["salary"]
+    except:
+        pass
+print("Maximum salary:", max_salary)
+print("Minimum salary:", min_salary)
+
+# Apply feature scaling to your k-means clustering code from the last lesson, on the "salary" and "exercised_stock_options"
+# features (use only these two features). What would be the rescaled value of a "salary" feature that had an original value
+# of $200,000, and an "exercised_stock_options" feature of $1 million? (Be sure to represent these numbers as floats, not 
+# integers!)
+from sklearn.preprocessing import MinMaxScaler
+scaler = MinMaxScaler()
+scaler.fit(finance_features)
+scaled = scaler.transform([[200000.0, 1000000.0, 0.0]])
+print("Scaled salary of 200,000:", scaled[0][0])
+print("Scaled excercised_stock_options of 1,000,000:", scaled[0][1])
