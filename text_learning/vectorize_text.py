@@ -57,7 +57,8 @@ for name, from_person in [("sara", from_sara), ("chris", from_chris)]:
             
             ### ["sara", "shackleton", "chris", "germani"]
 
-            for i in ["sara", "shackleton", "chris", "germani"]:
+            for i in ["sara", "shackleton", "chris", "germani", "sshacklensf", "cgermannsf"]:
+                # sshacklensf, cgermannsf are additional outliers we found in find_signature.py
                 extracted_text = extracted_text.replace(i, "")
 
             ### append the text to word_data
