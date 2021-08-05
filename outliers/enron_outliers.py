@@ -30,7 +30,9 @@ for name in data_dict:
     except:
         pass
 print("Outlier bonus:", max_bonus)
+# ('Outlier bonus:', 97343619)
 print("Key for outlier bonus:", max_bonus_name)
+# ('Key for outlier bonus:', 'TOTAL')
 # It's the TOTAL row that got included in the dataset
 
 # Remove the "TOTAL" from the dataset
@@ -56,6 +58,7 @@ matplotlib.pyplot.show()
 # We would argue that there's 4 more outliers to investigate; let's look at a couple of them. Two people made bonuses of at
 # least 5 million dollars, and a salary of over 1 million dollars; in other words, they made out like bandits. What are the
 # names associated with those points?
+# 2 people with > 5e6 bonuses and > 1e6 salaries
 name_outlier = []
 for name in data_dict:
     try:
@@ -64,3 +67,14 @@ for name in data_dict:
     except:
         pass
 print("Leftover Outlier:", name_outlier)
+# ('Leftover Outlier:', ['LAY KENNETH L', 'SKILLING JEFFREY K'])
+# 4 outlier people
+name_outlier = []
+for name in data_dict:
+    try:
+        if (int(data_dict[name]["salary"]) > 1e+6) or (int(data_dict[name]["bonus"]) > 7e+6):
+            name_outlier.append(name)
+    except:
+        pass
+print("Leftover Outlier:", name_outlier)
+# ('Leftover Outlier:', ['LAVORATO JOHN J', 'LAY KENNETH L', 'SKILLING JEFFREY K', 'FREVERT MARK A'])
